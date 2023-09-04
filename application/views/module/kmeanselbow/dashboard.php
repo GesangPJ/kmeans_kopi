@@ -43,14 +43,20 @@
             </table>
         </div>   
 </div>
-<div class="export-button-container" style="text-align: center; margin-top: 10px;">
-                <form method="post" action="export.php">
-                    <input type="hidden" name="export_data" value="1">
-                    <button type="submit" class="export-button" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">
-                        Export Data
-                    </button>
-                </form>
-            </div>
+<div class="export-button-container" style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+        <!-- Add the "Go To ThingSpeak" button on the left with a target="_blank" attribute -->
+        <a href="https://thingspeak.com/channels/public" target="_blank" class="export-button" style="padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">
+            Go To ThingSpeak
+        </a>
+        <!-- Move the "Export Data" button to the right -->
+        <form method="post" action="export.php">
+            <input type="hidden" name="export_data" value="1">
+            <button type="submit" class="export-button" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">
+                Export Data
+            </button>
+        </form>
+    </div>
+
 </body>
 
 
