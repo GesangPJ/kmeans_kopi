@@ -4,9 +4,8 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| >=5.1   | :white_check_mark: |
+| x.      | :white_check_mark: |
 | x.-BETA | :x:                |
-| < 5.1   | :x:                |
 
 # Vulnerability Reporting
 
