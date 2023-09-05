@@ -49,7 +49,7 @@
             Go To ThingSpeak
         </a>
         <!-- Move the "Export Data" button to the right -->
-        <form method="post" action="export.php">
+        <form method="post" action="../kmeanselbow/export.php">
             <input type="hidden" name="export_data" value="1">
             <button type="submit" class="export-button" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">
                 Export Data
