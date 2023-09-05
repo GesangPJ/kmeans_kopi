@@ -16,3 +16,11 @@ Upload the dataset or another custom dataset
 ### 3. Elbow Optimization
 
 Use the uploaded dataset to Start Elbow Clustering
+
+## Setup
+
+1. Clone to your directory
+2. Edit database connection '../config/database.php' to your database connection preference
+3. Edit base_url if needed ('../config/config.php')
+4. Import Database in '../data/' (kopi.sql) to your MySQL Server
+5. Run Server
