@@ -25,7 +25,7 @@ $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
 // Set headers
-$sheet->setCellValue('A1', 'Tanggal Jam');
+$sheet->setCellValue('A1', 'tanggaljam');
 $sheet->setCellValue('B1', 'Suhu');
 $sheet->setCellValue('C1', 'pH');
 $sheet->setCellValue('D1', 'Kelembaban');
