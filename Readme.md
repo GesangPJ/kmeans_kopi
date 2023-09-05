@@ -17,6 +17,10 @@ Upload the dataset or another custom dataset
 
 Use the uploaded dataset to Start Elbow Clustering
 
+## Requirements
+
+1. PHP 7.4
+
 ## Setup
 
 1. Clone to your directory
