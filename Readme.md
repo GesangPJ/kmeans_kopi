@@ -20,6 +20,7 @@ Use the uploaded dataset to Start Elbow Clustering
 ## Requirements
 
 1. PHP 7.4
+2. PHP Composer
 
 ## Setup
 
