@@ -70,6 +70,10 @@ CREATE TABLE IF NOT EXISTS sensor_data (
 """
 cursor.execute(create_table_query)
 
+# Reset the auto-increment ID to 1
+reset_id_query = "ALTER TABLE sensor_data AUTO_INCREMENT = 1;"
+cursor.execute(reset_id_query)
+
 # Insert the sorted data from the DataFrame into the database
 insert_query = "INSERT INTO sensor_data (tanggaljam, suhu, pH, kelembapan) VALUES (%s, %s, %s, %s)"
 values = [tuple(row) for row in df.values]
