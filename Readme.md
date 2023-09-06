@@ -19,11 +19,8 @@ Use the uploaded dataset to Start Elbow Clustering
 
 ## Requirements /  Steps
 
-1. Install Xampp 7.4.33
-2. Install Composer (PHP Composer)
-3. Open VSCode
-4. In VSCode terminal type composer install
-5. Done
+- Xampp 7.4.33
+- Composer (PHP Composer)
 
 ## Setup
 
@@ -31,4 +28,5 @@ Use the uploaded dataset to Start Elbow Clustering
 2. Edit database connection '../config/database.php' to your database connection preference
 3. Edit base_url if needed ('../config/config.php')
 4. Import Database in '../data/' (kopi.sql) to your MySQL Server
-5. Run Server
+5. Run Composer Install and wait
+6. Open Webpage
