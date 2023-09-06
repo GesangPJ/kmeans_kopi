@@ -17,10 +17,13 @@ Upload the dataset or another custom dataset
 
 Use the uploaded dataset to Start Elbow Clustering
 
-## Requirements
+## Requirements /  Steps
 
-1. PHP 7.4
-2. PHP Composer
+1. Install Xampp 7.4.33
+2. Install Composer (PHP Composer)
+3. Open VSCode
+4. In VSCode terminal type composer install
+5. Done
 
 ## Setup
 
