@@ -92,4 +92,5 @@ defined('searchbar')       OR define('searchbar', false); // Search bar in heade
 defined('rightbar')       OR define('rightbar', false); // Right bar in header
 defined('megamenu')       OR define('megamenu', false); // Megamenu bar in header
 
-defined('APPNAME')       OR define('APPNAME', 'GESANG TECHNOLOGY'); // Megamenu bar in header
+//defined('APPNAME')       OR define('APPNAME', 'GESANG TECHNOLOGY'); // Megamenu bar in header
+defined('APPNAME')       OR define('APPNAME', 'K-MEANS KOPI');
