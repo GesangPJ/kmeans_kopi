@@ -280,8 +280,11 @@ foreach ($index as $key) {
                             <select class="form-control" name="centroid" onchange="typecentroid(event)">
                               <option value="rata-rata" <?=$this->session->userdata('centroid')=='rata-rata'?'selected':'';?>>Rata-Rata Nilai</option>
                               <option value="random" <?=$this->session->userdata('centroid')=='random'?'selected':'';?>>Random Centroid</option>
+<!--
                               <option value="custom" <?=$this->session->userdata('centroid')=='custom'?'selected':'';?>>Custom Centroid (beta)</option>
+                                    
                               <option value="fill" <?=$this->session->userdata('centroid')=='fill'?'selected':'';?>>Isi Manual</option>
+                                    -->
                             </select>
                         </div>
                     </div>
