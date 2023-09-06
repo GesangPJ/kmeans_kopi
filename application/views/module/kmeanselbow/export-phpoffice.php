@@ -1,8 +1,8 @@
 <?php
-require 'PHPExcel/Classes/PHPExcel.php';
+require 'vendor/autoload.php';
 
-// Create a new PHPExcel object
-$objPHPExcel = new PHPExcel();
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 // Connect to your database (replace with your database credentials)
 $servername = "localhost";
@@ -20,9 +20,9 @@ if ($conn->connect_error) {
 $sql = "SELECT tanggaljam, suhu, pH, kelembapan FROM sensor_data"; // Replace 'your_table' with your actual table name
 $result = $conn->query($sql);
 
-// Create a new worksheet
-$objPHPExcel->setActiveSheetIndex(0);
-$sheet = $objPHPExcel->getActiveSheet();
+// Create a new spreadsheet
+$spreadsheet = new Spreadsheet();
+$sheet = $spreadsheet->getActiveSheet();
 
 // Set headers
 $sheet->setCellValue('A1', 'tanggaljam');
@@ -45,13 +45,15 @@ if ($result->num_rows > 0) {
     $sheet->setCellValue('A2', 'No data available.');
 }
 
+// Create a new Xlsx writer
+$writer = new Xlsx($spreadsheet);
+
 // Set the header and file format
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment;filename="sensordata.xlsx"');
 
 // Save the Excel file to output
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-$objWriter->save('php://output');
+$writer->save('php://output');
 
 // Close the database connection
 $conn->close();
