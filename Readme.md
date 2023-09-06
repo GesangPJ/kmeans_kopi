@@ -29,4 +29,4 @@ Use the uploaded dataset to Start Elbow Clustering
 3. Edit base_url if needed ('../config/config.php')
 4. Import Database in '../data/' (kopi.sql) to your MySQL Server
 5. Run Composer Install and wait
-6. Open Webpage
+6. Open the project web in your browser
