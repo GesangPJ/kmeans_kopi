@@ -20,7 +20,25 @@ class KmeansElbow_Model extends CI_Model {
     $this->db->order_by('id', 'asc');
     $query = $this->db->get();
     return $query->result();
-  } 
+  }
+  public function deleteSensorData($id) {
+    // Delete a specific record from the 'sensor_data' table based on the 'id'
+    $this->db->where('id', $id);
+    $this->db->delete('sensor_data');
+
+    return ($this->db->affected_rows() > 0);
+  }
+  public function deleteAllSensorData() {
+    // Perform the deletion query
+    $this->db->empty_table('sensor_data');
+
+    // Check if the deletion was successful
+    if ($this->db->affected_rows() > 0) {
+        return true;
+    } else {
+        return false;
+    }
+  }
   public function init($data = NULL,$jmlcentroid = 0,$centroid = NULL,$maxloop = 10){
     $this->data = $data;
     $this->cluster = [];

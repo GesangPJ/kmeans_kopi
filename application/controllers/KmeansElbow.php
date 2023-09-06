@@ -50,6 +50,16 @@ class KmeansElbow extends CI_Controller {
         $var['footer'] = $this->footer;
         $this->load->view('main',$var);
   }
+  public function delete_sensor_data() {
+    $id = $this->input->post('id');
+    $this->load->model('KmeansElbow_model');
+    
+    if ($this->KmeansElbow_model->deleteSensorData($id)) {
+        echo "success";
+    } else {
+        echo "error";
+    }
+  }
   public function about()
 	{
         $var['menu'] = $this->menu;
