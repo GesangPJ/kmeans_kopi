@@ -17,7 +17,7 @@ Upload the dataset or another custom dataset
 
 Use the uploaded dataset to Start Elbow Clustering
 
-## Requirements /  Steps
+## Requirements
 
 - Xampp 7.4.33
 - Composer (PHP Composer)
