@@ -33,16 +33,20 @@ class KmeansElbow_Model extends CI_Model {
   }
 
   public function deleteAllSensorData() {
-    // Perform the deletion query
+    // Delete all records from the 'sensor_data' table
     $this->db->empty_table('sensor_data');
 
     // Check if the deletion was successful
     if ($this->db->affected_rows() > 0) {
+        // Reset the auto-increment value for MySQL
+        $this->db->query('ALTER TABLE sensor_data AUTO_INCREMENT = 1;');
+        
         return true;
     } else {
         return false;
     }
   }
+
   public function init($data = NULL,$jmlcentroid = 0,$centroid = NULL,$maxloop = 10){
     $this->data = $data;
     $this->cluster = [];

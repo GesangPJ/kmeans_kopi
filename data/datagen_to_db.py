@@ -50,8 +50,8 @@ df = df.sort_values(by="tanggaljam", ascending=False)
 # Establish a connection to the MySQL database
 db_connection = mysql.connector.connect(
     host="localhost",
-    user="gesangpj",
-    password="Gesang_0110",
+    user="root",
+    password="",
     database="kopi"
 )
 
@@ -71,8 +71,8 @@ CREATE TABLE IF NOT EXISTS sensor_data (
 cursor.execute(create_table_query)
 
 # Reset the auto-increment ID to 1
-reset_id_query = "ALTER TABLE sensor_data AUTO_INCREMENT = 1;"
-cursor.execute(reset_id_query)
+#reset_id_query = "ALTER TABLE sensor_data AUTO_INCREMENT = 1;"
+#cursor.execute(reset_id_query)
 
 # Insert the sorted data from the DataFrame into the database
 insert_query = "INSERT INTO sensor_data (tanggaljam, suhu, pH, kelembaban) VALUES (%s, %s, %s, %s)"
