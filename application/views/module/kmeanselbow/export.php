@@ -4,10 +4,20 @@ require 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+// Create a new spreadsheet
+$spreadsheet = new Spreadsheet();
+$sheet = $spreadsheet->getActiveSheet();
+
+// Set headers
+$sheet->setCellValue('A1', 'tanggaljam');
+$sheet->setCellValue('B1', 'Suhu');
+$sheet->setCellValue('C1', 'pH');
+$sheet->setCellValue('D1', 'Kelembaban');
+
 // Connect to your database (replace with your database credentials)
 $servername = "localhost";
-$username = "gesangpj";
-$password = "Gesang_0110";
+$username = "root";
+$password = "";
 $dbname = "kopi";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -19,16 +29,6 @@ if ($conn->connect_error) {
 // Fetch data from your database (selecting only the desired columns)
 $sql = "SELECT tanggaljam, suhu, pH, kelembaban FROM sensor_data"; // Replace 'your_table' with your actual table name
 $result = $conn->query($sql);
-
-// Create a new spreadsheet
-$spreadsheet = new Spreadsheet();
-$sheet = $spreadsheet->getActiveSheet();
-
-// Set headers
-$sheet->setCellValue('A1', 'tanggaljam');
-$sheet->setCellValue('B1', 'Suhu');
-$sheet->setCellValue('C1', 'pH');
-$sheet->setCellValue('D1', 'Kelembaban');
 
 if ($result->num_rows > 0) {
     $row = 2;

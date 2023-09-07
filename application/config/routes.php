@@ -53,3 +53,4 @@ $route['default_controller'] = 'home';
 $route['login'] = 'auth/login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+$route['exportdata'] = 'ExportData';
