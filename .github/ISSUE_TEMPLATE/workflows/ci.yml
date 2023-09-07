@@ -1,0 +1,54 @@
+name: CI for CodeIgniter 3
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4.33
+
+      - name: Create Database
+        run: |
+          mysql -u $DB_USER -p$DB_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
+        env:
+          DB_USER: root
+          DB_PASSWORD: 
+          DB_NAME: kopi
+
+      - name: Import Database Dump
+        run: |
+          mysql -u $DB_USER -p$DB_PASSWORD $DB_NAME < data/kopi.sql
+        env:
+          DB_USER: root
+          DB_PASSWORD: 
+          DB_NAME: kopi
+
+      - name: Set Database Environment Variables
+        run: |
+          echo "DB_HOST=localhost" >> $GITHUB_ENV
+          echo "DB_USER=$DB_USER" >> $GITHUB_ENV
+          echo "DB_PASSWORD=$DB_PASSWORD" >> $GITHUB_ENV
+          echo "DB_NAME=$DB_NAME" >> $GITHUB_ENV
+        env:
+          DB_USER: root
+          DB_PASSWORD: 
+          DB_NAME: kopi
+
+      - name: Install Composer Dependencies
+        run: composer install
+
+      - name: Run Tests
+        run: phpunit
+
+# Add more steps for deployment or other tasks as needed
