@@ -66,7 +66,7 @@ class KmeansElbow extends CI_Controller {
     $tgl_sekarang = date("ymd");
     $jam_sekarang = date("H:i:s");
 
-    if(!empty($_POST['suhu']) && !empty($_POST['kelembapan']) && !empty($_POST['pH'])) {
+    if(!empty($_POST['suhu']) && !empty($_POST['kelembaban']) && !empty($_POST['pH'])) {
         $suhu = $_POST['suhu'];
         $kelembaban = $_POST['kelembaban'];
         $pH = $_POST['pH'];
@@ -76,7 +76,7 @@ class KmeansElbow extends CI_Controller {
             'tanggaljam' => date('Y-m-d H:i:s'), // Use the current datetime
             'suhu' => $suhu,
             'pH' => $pH,
-            'kelembapan' => $kelembaban
+            'kelembaban' => $kelembaban
         );
 
         $this->db->insert('sensor_data', $data);

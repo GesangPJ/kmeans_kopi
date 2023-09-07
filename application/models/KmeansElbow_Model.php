@@ -15,7 +15,7 @@ class KmeansElbow_Model extends CI_Model {
       $this->load->database();
   }
   public function getSensorData() {
-    $this->db->select('id, tanggaljam, suhu, pH, kelembapan');
+    $this->db->select('id, tanggaljam, suhu, pH, kelembaban');
     $this->db->from('sensor_data');
     $this->db->order_by('id', 'asc');
     $query = $this->db->get();

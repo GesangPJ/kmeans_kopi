@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 }
 
 // Fetch data from your database (selecting only the desired columns)
-$sql = "SELECT tanggaljam, suhu, pH, kelembapan FROM sensor_data"; // Replace 'your_table' with your actual table name
+$sql = "SELECT tanggaljam, suhu, pH, kelembaban FROM sensor_data"; // Replace 'your_table' with your actual table name
 $result = $conn->query($sql);
 
 // Create a new spreadsheet

@@ -27,7 +27,7 @@
                             <td><?php echo $entry->tanggaljam; ?></td>
                             <td><?php echo $entry->suhu; ?></td>
                             <td><?php echo $entry->pH; ?></td>
-                            <td><?php echo $entry->kelembapan; ?></td>
+                            <td><?php echo $entry->kelembaban; ?></td>
                         </tr>
                     <?php
                     endforeach;

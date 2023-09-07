@@ -51,7 +51,7 @@ CREATE TABLE `sensor` (
   `tanggaljam` datetime NOT NULL,
   `suhu` int(11) NOT NULL,
   `pH` int(11) NOT NULL,
-  `kelembapan` int(11) NOT NULL
+  `kelembaban` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -65,14 +65,14 @@ CREATE TABLE `sensor_data` (
   `tanggaljam` datetime DEFAULT NULL,
   `suhu` int(11) DEFAULT NULL,
   `pH` int(11) DEFAULT NULL,
-  `kelembapan` int(11) DEFAULT NULL
+  `kelembaban` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sensor_data`
 --
 
-INSERT INTO `sensor_data` (`id`, `tanggaljam`, `suhu`, `pH`, `kelembapan`) VALUES
+INSERT INTO `sensor_data` (`id`, `tanggaljam`, `suhu`, `pH`, `kelembaban`) VALUES
 (1, '2023-12-17 21:14:16', 26, 13, 38),
 (2, '2023-12-10 12:26:39', 33, 1, 77),
 (3, '2023-12-07 01:01:10', 27, 6, 75),
