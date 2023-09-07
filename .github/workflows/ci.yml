@@ -25,6 +25,8 @@ jobs:
           DB_USER: root
           DB_PASSWORD: 
           DB_NAME: kopi
+          DB_DRIVER: mysqli
+          DB_PORT: 3306
 
       - name: Import Database Dump
         run: |
@@ -33,6 +35,8 @@ jobs:
           DB_USER: root
           DB_PASSWORD: 
           DB_NAME: kopi
+          DB_DRIVER: mysqli
+          DB_PORT: 3306
 
       - name: Set Database Environment Variables
         run: |
@@ -40,10 +44,14 @@ jobs:
           echo "DB_USER=$DB_USER" >> $GITHUB_ENV
           echo "DB_PASSWORD=$DB_PASSWORD" >> $GITHUB_ENV
           echo "DB_NAME=$DB_NAME" >> $GITHUB_ENV
+          echo "DB_DRIVER=$DB_DRIVER" >> $GITHUB_ENV
+          echo "DB_PORT=$DB_PORT" >> $GITHUB_ENV
         env:
           DB_USER: root
           DB_PASSWORD: 
           DB_NAME: kopi
+          DB_DRIVER: mysqli
+          DB_PORT: 3306
 
       - name: Install Composer Dependencies
         run: composer install
