@@ -530,7 +530,7 @@ foreach ($index as $key) {
               <?php }else if($page == "result"){
                 $obj = "";
                 ?>
-                <h4>Hasil Cluster KMeans</h4>
+                <h4>Hasil Cluster K-Means</h4>
                 <div class="table-responsive" id="export">
                   <table class="table table-border">
                     <thead>
