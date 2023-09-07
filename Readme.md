@@ -2,12 +2,10 @@
 
 ### This is K-Means visualization website for Coffe Plants
 
-## Features
 
 ### 1. Dashboard
 
 A Dashboard to get Arduino Sensor Data
-
 
 ### 2. Dataset Upload
 
@@ -15,7 +13,25 @@ Upload the dataset or another custom dataset
 
 ### 3. Elbow Optimization
 
-Use the uploaded dataset to Start Elbow Clustering
+Use the uploaded dataset to Start Elbow Optimization
+
+### 4. Centroid Type
+
+Choose which type of centroid :
+- Means
+- Random
+
+### 5. K-Means Process
+
+See the details of K-Means calculation like Euclidean Distance
+
+### 6. Result
+
+See the result of K-Means Clustering
+
+### 7. Export Result
+
+Export the K-Means cluster, for now it's docx format
 
 ## Requirements
 
