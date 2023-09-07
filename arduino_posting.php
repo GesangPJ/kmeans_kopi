@@ -23,12 +23,14 @@ if (!empty($_POST['suhu']) && !empty($_POST['kelembaban']) && !empty($_POST['pH'
     // Prepare and execute the SQL query
     $sql = "INSERT INTO sensor_data (tanggaljam, suhu, kelembaban, pH) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $tanggaljam, $suhu, $kelembaban, $pH);
+
+    // Use appropriate placeholders: "s" for string, "d" for double, "i" for integer
+    $stmt->bind_param("ssdd", $tanggaljam, $suhu, $kelembaban, $pH);
 
     if ($stmt->execute()) {
         echo "OK";
     } else {
-        echo "Error: " . $conn->error;
+        echo "Error: " . $stmt->error;
     }
 
     $stmt->close();
