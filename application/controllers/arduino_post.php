@@ -9,7 +9,7 @@ class arduino_post extends CI_Controller {
         $this->load->database();
     }
 
-    public function your_method() {
+    public function index() {
         // Get current date and time
         $tgl_sekarang = date("ymd");
         $jam_sekarang = date("H:i:s");
