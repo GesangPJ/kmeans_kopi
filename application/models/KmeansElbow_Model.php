@@ -31,14 +31,14 @@ class KmeansElbow_Model extends CI_Model {
 
     return ($this->db->affected_rows() > 0);
   }
-
+  // Untuk menghapus semua data pada tabel sensor_data
   public function deleteAllSensorData() {
-    // Delete all records from the 'sensor_data' table
+    // Hapus semua data
     $this->db->empty_table('sensor_data');
 
-    // Check if the deletion was successful
+    // Cek apakah berhasil dihapus
     if ($this->db->affected_rows() > 0) {
-        // Reset the auto-increment value for MySQL
+        // Reset Auto Increment mulai dari 1 lagi.
         $this->db->query('ALTER TABLE sensor_data AUTO_INCREMENT = 1;');
         
         return true;

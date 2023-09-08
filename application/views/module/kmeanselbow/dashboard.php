@@ -1,8 +1,10 @@
 <body>
+    
 <div class="col-xl-12">
     <div class="card-box">
     <div class="table-container" style="height: 400px; overflow: auto;">
         <div class="table-responsive">
+            <!--Tabel Sensor Data-->
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -15,14 +17,15 @@
                 </thead>
                 <tbody>
                 <?php
+                // Ambil Model dan function untuk ambil data sensor dari database
                 $CI = &get_instance();
-                $CI->load->model('KmeansElbow_Model'); // Load the model
-                $log_entries = $CI->KmeansElbow_Model->getSensorData(); // Retrieve data from the model
+                $CI->load->model('KmeansElbow_Model'); 
+                $log_entries = $CI->KmeansElbow_Model->getSensorData(); // Ambil data dari file model
 
                 if (!empty($log_entries)):
                     foreach ($log_entries as $entry):
-                    ?>
-                        <tr>
+                    ?><!-- Menampilkan data dari database ke tabel dibawah-->
+                        <tr> 
                             <td><?php echo $entry->id; ?></td>
                             <td><?php echo $entry->tanggaljam; ?></td>
                             <td><?php echo $entry->suhu; ?></td>
@@ -32,7 +35,7 @@
                     <?php
                     endforeach;
                 else:
-                    ?>
+                    ?> <!-- Jika tidak ada data / Tabel kosong -->
                     <tr>
                         <td colspan="5">No data available.</td>
                     </tr>
@@ -44,15 +47,15 @@
         </div>   
 </div>
 <div class="export-button-container" style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-        <!-- Add the "Delete Sensor Data" button on the left -->
+        <!-- Tombol hapus data -->
         <button id="delete-data-button" class="delete-button" style="padding: 10px 20px; background-color: #FF0000; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">
             Delete Sensor Data
         </button>
-        <!-- Centered "Go To ThingSpeak" button -->
+        <!-- Tombol Thingspeak -->
         <a href="https://thingspeak.com" target="_blank" class="export-button" style="padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">
             Go To ThingSpeak
         </a>
-        <!-- Move the "Export Data" button to the right -->
+        <!-- Tombol Export Data -->
         <form method="post" action="<?= base_url('exportdata') ?>">
             <input type="hidden" name="export_data" value="1">
             <button type="submit" class="export-button" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">
@@ -61,20 +64,21 @@
         </form>
     </div>
     
-    <!-- JavaScript for handling delete confirmation -->
+    <!-- JavaScript untuk konfirmasi hapus data -->
     <script>
     document.getElementById("delete-data-button").addEventListener("click", function() {
         var confirmDelete = confirm("Are you sure you want to delete all sensor data?");
         if (confirmDelete) {
-            // Send an AJAX request to delete all data in the 'sensor_data' table
+            // Mengirim AJAX untuk menghapus semua data pada tabel Sensor Data
             $.ajax({
                 type: "POST",
-                url: "", // Leave this empty since you're not using a separate controller
+                url: "", // Arahkan ke controller
                 data: { delete_all: true },
                 success: function(response) {
                     if (response === "success") {
                         alert("All data deleted successfully!");
-                        // Optionally, refresh the page or update the table
+                        // Refresh halaman setelah data dihapus
+                        location.reload();
                     } else {
                         alert("All data deleted successfully!");
                     }
@@ -88,11 +92,11 @@
     </script>
 
     <?php
-    // Load the model
+    // Ambil Model
     $CI = &get_instance();
     $CI->load->model('KmeansElbow_Model');
 
-    // Check if the request method is POST and if 'delete_all' parameter is set
+    // Cek jika metode request sudah jadi POST dan apakah parameter delete_all sudah diset
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
         // Call the deleteAllSensorData method from the model
         if ($CI->KmeansElbow_Model->deleteAllSensorData()) {
@@ -100,7 +104,7 @@
         } else {
             echo "error";
         }
-        exit(); // Prevent further execution of the script
+        exit(); // Hentikan script
     }
     ?>
 
