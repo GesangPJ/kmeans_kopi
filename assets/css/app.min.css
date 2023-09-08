@@ -189,10 +189,10 @@ body {
     .navigation-menu>li>a:active,
     .navigation-menu>li>a:focus,
     .navigation-menu>li>a:hover {
-        color: #1abc9c
+        color: #02c0ff
     }
     .navigation-menu>li:hover a {
-        color: #1abc9c
+        color: #02c0ff
     }
     .navigation-menu>li:first-of-type>a {
         padding-left: 0
@@ -209,7 +209,7 @@ body {
     }
     .navigation-menu>li>ul>li.has-submenu:active>a,
     .navigation-menu>li>ul>li.has-submenu:hover>a {
-        color: #1abc9c
+        color: #02c0ff
     }
     .navigation-menu>li .submenu {
         position: absolute;
@@ -246,7 +246,7 @@ body {
         color: #323a46
     }
     .navigation-menu>li .submenu li a:hover {
-        color: #1abc9c
+        color: #02c0ff
     }
     .navigation-menu>li .submenu li.has-submenu>a .arrow-down:after {
         right: 20px!important;
@@ -2424,7 +2424,7 @@ body {
 }
 
 .dd-list .dd-item .dd-handle:hover {
-    color: #1abc9c
+    color: #02c0ff
 }
 
 .dd-list .dd-item button {
@@ -2459,7 +2459,7 @@ body {
 }
 
 .dd-list .dd3-content:hover {
-    color: #1abc9c
+    color: #02c0ff
 }
 
 .dd-list .dd3-handle:before {
@@ -2549,7 +2549,7 @@ body {
 .irs--modern .irs-handle.state_hover>i:first-child,
 .irs--modern .irs-handle:hover>i:first-child,
 .irs--modern .irs-handle>i:first-child {
-    background-color: #17a689
+    background-color: #02c0ff
 }
 
 .irs--flat .irs-from:before,
