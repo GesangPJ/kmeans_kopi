@@ -14,6 +14,7 @@ class KmeansElbow_Model extends CI_Model {
       parent::__construct();
       $this->load->database();
   }
+  // Mengambil Sensor Data dari Database
   public function getSensorData() {
     $this->db->select('id, tanggaljam, suhu, pH, kelembaban');
     $this->db->from('sensor_data');
@@ -46,7 +47,7 @@ class KmeansElbow_Model extends CI_Model {
         return false;
     }
   }
-
+  // Inisialisasi Data 
   public function init($data = NULL,$jmlcentroid = 0,$centroid = NULL,$maxloop = 10){
     $this->data = $data;
     $this->cluster = [];
@@ -75,6 +76,7 @@ class KmeansElbow_Model extends CI_Model {
   public function getprocess(){
     return array("centroid"=>$this->centroid_allof,"distance"=>$this->distance,"cluster"=>$this->cluster);
   }
+  // Optimasi Elbow
   public function elbow_optimize($data=[],$maxcluster=2,$maxloop=10,$centroid = NULL){
     $hasil=array();
     $result=array();
@@ -114,6 +116,7 @@ class KmeansElbow_Model extends CI_Model {
     return array("process"=>$process,"hasil"=>$result);
 
   }
+  // Eksekusi atau Perhitungan K-Means
   public function execute(){
     for($i=0;;$i++){
         $this->cluster[$i] = array();
@@ -178,6 +181,7 @@ class KmeansElbow_Model extends CI_Model {
         }
     }
   }
+  // Menghentikan Loop
   private function stoploop($i){
     if(sizeof($this->cluster)>1){
       $last_index_cluster = sizeof($this->cluster)-1;
@@ -191,6 +195,7 @@ class KmeansElbow_Model extends CI_Model {
       return true;
     }else{return false;}
   }
+  // Jika Centroid Random
   private function centroid_random(){
       $central = round(sizeof($this->data)/$this->jmlcentroid,0);
       $step = $central;
@@ -229,6 +234,7 @@ class KmeansElbow_Model extends CI_Model {
       }
       return $centroid_awal;
   }
+  // Jika centroid adalah Rata-Rata Nilai
   private function centroid_rata_rata(){
       $central = round(sizeof($this->data)/$this->jmlcentroid,0);
       $step = $central;
