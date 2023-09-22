@@ -32,7 +32,7 @@
                             <td><?php echo $entry->suhu; ?></td>
                             <td><?php echo $entry->pH; ?></td>
                             <td><?php echo $entry->kelembaban; ?></td>
-                            <td><?php echo $entry->kondisi;?></td>
+                            <td><?php echo $entry->kondisi; ?></td>
                         </tr>
                     <?php
                     endforeach;

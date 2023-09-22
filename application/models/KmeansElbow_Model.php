@@ -16,7 +16,7 @@ class KmeansElbow_Model extends CI_Model {
   }
   // Mengambil Sensor Data dari Database
   public function getSensorData() {
-    $this->db->select('id, tanggaljam, suhu, pH, kelembaban');
+    $this->db->select('id, tanggaljam, suhu, pH, kelembaban, kondisi');
     $this->db->from('sensor_data');
     $this->db->order_by('id', 'asc');
     $query = $this->db->get();
