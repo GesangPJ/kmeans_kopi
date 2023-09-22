@@ -1,8 +1,5 @@
 <?php
-// Set zona waktu
-date_default_timezone_set('Asia/Jakarta');
-
-// Properti koneksi database
+// Connect to your database (you may need to modify the connection details)
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -10,12 +7,12 @@ $dbname = "kopi";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Cek koneksi
+// Check the connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// set format tanggal waktu
+// Get the current date and time
 $current_time = date('Y-m-d H:i:s');
 
 if (!empty($_POST['suhu']) && !empty($_POST['kelembaban']) && !empty($_POST['pH'])) {
@@ -23,7 +20,7 @@ if (!empty($_POST['suhu']) && !empty($_POST['kelembaban']) && !empty($_POST['pH'
     $kelembaban = $_POST['kelembaban'];
     $pH = $_POST['pH'];
 
-    // Menyiapkan query
+    // Prepare and execute the SQL query
     $sql = "INSERT INTO sensor_data (tanggaljam, suhu, kelembaban, pH) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
