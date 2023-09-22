@@ -23,6 +23,7 @@ class ExportData extends CI_Controller {
         $sheet->setCellValue('B1', 'Suhu');
         $sheet->setCellValue('C1', 'pH');
         $sheet->setCellValue('D1', 'Kelembaban');
+        $sheet->setCellValue('E1', 'Kondisi');
 
         // Fetch data from your database (selecting only the desired columns)
         $query = $this->db->get('sensor_data'); // 'sensor_data' is your table name
