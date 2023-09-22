@@ -13,6 +13,7 @@
                         <th>Suhu</th>
                         <th>pH</th>
                         <th>Kelembaban</th>
+                        <th>Kondisi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +32,7 @@
                             <td><?php echo $entry->suhu; ?></td>
                             <td><?php echo $entry->pH; ?></td>
                             <td><?php echo $entry->kelembaban; ?></td>
+                            <td><?php echo $entry->kondisi;?></td>
                         </tr>
                     <?php
                     endforeach;
