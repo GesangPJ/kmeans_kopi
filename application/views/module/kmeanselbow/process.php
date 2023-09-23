@@ -531,75 +531,75 @@ if($page == "execute"){
                 $obj = "";
                 ?>
                 <h4>Hasil Cluster K-Means</h4>
-<div class="table-responsive" id="export">
-    <table class="table table-border">
-        <thead>
-            <?php
-            foreach ($this->session->userdata("process_datasetindex") as $n => $v) {
-                if ($n == 0) {
-                    $obj = $v;
-                }
-            ?>
-            <th><?= $v ?></th>
-            <?php
-            }
-            ?>
-            <th>Cluster</th>
-        </thead>
-        <?php
-        if ($this->session->userdata("kmeans_result") !== NULL) {
-            $resk = $this->session->userdata("kmeans_result");
-            aasort($resk, 1);
-            foreach ($resk as $key) {
-            ?>
-            <tr>
-                <td><?= $key[0] ?></td>
-                <?php
-                foreach ($this->session->userdata("process_datasetindex") as $n => $v) {
-                    if ($n > 0) {
-                        $attr = array_column($this->session->userdata("process_dataset"), $v, $obj);
-                ?>
-                <td><?= $attr[$key[0]] ?></td>
-                <?php
-                }
-                }
-                ?>
-                <td><?= $key[1] ?></td>
-            </tr>
-            <?php
-            }
-        }
-        ?>
-    </table>
-</div>
+                <div class="table-responsive" id="export">
+                    <table class="table table-border">
+                        <thead>
+                            <?php
+                            foreach ($this->session->userdata("process_datasetindex") as $n => $v) {
+                                if ($n == 0) {
+                                    $obj = $v;
+                                }
+                            ?>
+                            <th><?= $v ?></th>
+                            <?php
+                            }
+                            ?>
+                            <th>Cluster</th>
+                        </thead>
+                        <?php
+                        if ($this->session->userdata("kmeans_result") !== NULL) {
+                            $resk = $this->session->userdata("kmeans_result");
+                            aasort($resk, 1);
+                            foreach ($resk as $key) {
+                            ?>
+                            <tr>
+                                <td><?= $key[0] ?></td>
+                                <?php
+                                foreach ($this->session->userdata("process_datasetindex") as $n => $v) {
+                                    if ($n > 0) {
+                                        $attr = array_column($this->session->userdata("process_dataset"), $v, $obj);
+                                ?>
+                                <td><?= $attr[$key[0]] ?></td>
+                                <?php
+                                }
+                                }
+                                ?>
+                                <td><?= $key[1] ?></td>
+                            </tr>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </table>
+                </div>
 
-<h4>Jumlah Cluster</h4>
-<table class="table table-border">
-    <thead>
-        <th>Cluster</th>
-        <th>Jumlah</th>
-    </thead>
-    <?php
-    if ($this->session->userdata("kmeans_result") !== NULL) {
-        $res = array();
-        foreach ($this->session->userdata("kmeans_result") as $key) {
-            if (!isset($res[$key[1]])) {
-                $res[$key[1]] = 1;
-            } else {
-                $res[$key[1]]++;
-            }
-        }
-        foreach ($res as $key => $val) {
-        ?>
-        <tr>
-            <td><?= $key ?></td>
-            <td><?= $val ?></td>
-        </tr>
-        <?php
-        }
-    }
-    ?>
-</table>
+                <h4>Jumlah Cluster</h4>
+                <table class="table table-border">
+                    <thead>
+                        <th>Cluster</th>
+                        <th>Jumlah</th>
+                    </thead>
+                    <?php
+                    if ($this->session->userdata("kmeans_result") !== NULL) {
+                        $res = array();
+                        foreach ($this->session->userdata("kmeans_result") as $key) {
+                            if (!isset($res[$key[1]])) {
+                                $res[$key[1]] = 1;
+                            } else {
+                                $res[$key[1]]++;
+                            }
+                        }
+                        foreach ($res as $key => $val) {
+                        ?>
+                        <tr>
+                            <td><?= $key ?></td>
+                            <td><?= $val ?></td>
+                        </tr>
+                        <?php
+                        }
+                    }
+                    ?>
+                </table>
 
 <!--?php 
 if ($this->session->userdata("kmeans_result") !== NULL) {
@@ -611,61 +611,61 @@ if ($this->session->userdata("kmeans_result") !== NULL) {
 }
 ?-->
               <h4>Jumlah Data Kondisi Per-Cluster</h4>
-<table class="table table-border">
-    <thead>
-        <th>Cluster</th>
-        <th>Kondisi Baik</th>
-        <th>Kondisi Sedang</th>
-        <th>Kondisi Buruk</th>
-    </thead>
-    <?php
-    if ($this->session->userdata("kmeans_result") !== NULL && $this->session->userdata("process_dataset") !== NULL) {
-        // Get the data from both session variables
-        $kmeansResult = $this->session->userdata("kmeans_result");
-        $processDataset = $this->session->userdata("process_dataset");
-        
-        // Create an associative array to store cluster assignments based on the timestamp
-        $clusterAssignments = array();
-        foreach ($kmeansResult as $result) {
-            $timestamp = $result[0];
-            $cluster = $result[1];
-            $clusterAssignments[$timestamp] = $cluster;
-        }
-        
-        // Initialize arrays to keep track of 'kondisi' counts for each cluster
-        $clusterKondisiCounts = array();
-        
-        // Iterate through the dataset to count 'kondisi' values for each cluster
-        foreach ($processDataset as $data) {
-            $timestamp = $data['tanggaljam'];
-            $kondisi = $data['kondisi'];
-            
-            // Get the cluster assignment for the current data point
-            $cluster = $clusterAssignments[$timestamp];
-            
-            // Initialize the count for the cluster if it doesn't exist
-            if (!isset($clusterKondisiCounts[$cluster])) {
-                $clusterKondisiCounts[$cluster] = array(0, 0, 0);
-            }
-            
-            // Increment the count for the corresponding 'kondisi' value
-            $clusterKondisiCounts[$cluster][$kondisi - 1]++;
-        }
-        
-        // Display the counts in the table
-        foreach ($clusterKondisiCounts as $cluster => $counts) {
-        ?>
-        <tr>
-            <td><?= $cluster ?></td>
-            <td><?= $counts[0] ?></td>
-            <td><?= $counts[1] ?></td>
-            <td><?= $counts[2] ?></td>
-        </tr>
-        <?php
-        }
-    }
-    ?>
-</table>
+              <table class="table table-border">
+                  <thead>
+                      <th>Cluster</th>
+                      <th>Kondisi Baik</th>
+                      <th>Kondisi Sedang</th>
+                      <th>Kondisi Buruk</th>
+                  </thead>
+                  <?php
+                  if ($this->session->userdata("kmeans_result") !== NULL && $this->session->userdata("process_dataset") !== NULL) {
+                      // Get the data from both session variables
+                      $kmeansResult = $this->session->userdata("kmeans_result");
+                      $processDataset = $this->session->userdata("process_dataset");
+                      
+                      // Create an associative array to store cluster assignments based on the timestamp
+                      $clusterAssignments = array();
+                      foreach ($kmeansResult as $result) {
+                          $timestamp = $result[0];
+                          $cluster = $result[1];
+                          $clusterAssignments[$timestamp] = $cluster;
+                      }
+                      
+                      // Initialize arrays to keep track of 'kondisi' counts for each cluster
+                      $clusterKondisiCounts = array();
+                      
+                      // Iterate through the dataset to count 'kondisi' values for each cluster
+                      foreach ($processDataset as $data) {
+                          $timestamp = $data['tanggaljam'];
+                          $kondisi = $data['kondisi'];
+                          
+                          // Get the cluster assignment for the current data point
+                          $cluster = $clusterAssignments[$timestamp];
+                          
+                          // Initialize the count for the cluster if it doesn't exist
+                          if (!isset($clusterKondisiCounts[$cluster])) {
+                              $clusterKondisiCounts[$cluster] = array(0, 0, 0);
+                          }
+                          
+                          // Increment the count for the corresponding 'kondisi' value
+                          $clusterKondisiCounts[$cluster][$kondisi - 1]++;
+                      }
+                      
+                      // Display the counts in the table
+                      foreach ($clusterKondisiCounts as $cluster => $counts) {
+                      ?>
+                      <tr>
+                          <td><?= $cluster ?></td>
+                          <td><?= $counts[0] ?></td>
+                          <td><?= $counts[1] ?></td>
+                          <td><?= $counts[2] ?></td>
+                      </tr>
+                      <?php
+                      }
+                  }
+                  ?>
+              </table>
 
                 </div>
                 <button class="btn btn-purple" onclick="Export2Word('export','export.docx')">Export</button>
