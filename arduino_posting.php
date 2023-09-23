@@ -26,7 +26,7 @@ if (!empty($_POST['suhu']) && !empty($_POST['kelembaban']) && !empty($_POST['pH'
     $stmt = $conn->prepare($sql);
 
     // Use appropriate placeholders: "s" for string, "d" for double, "i" for integer
-    $stmt->bind_param("ssdds", $current_time, $suhu, $kelembaban, $pH, $kondisi);
+    $stmt->bind_param("ssddd", $current_time, $suhu, $kelembaban, $pH, $kondisi);
 
     if ($stmt->execute()) {
         echo "OK";
