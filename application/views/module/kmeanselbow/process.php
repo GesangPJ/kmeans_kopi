@@ -614,9 +614,9 @@ if ($this->session->userdata("kmeans_result") !== NULL) {
               <table class="table table-border">
                   <thead>
                       <th>Cluster</th>
-                      <th>Kondisi Baik</th>
-                      <th>Kondisi Sedang</th>
                       <th>Kondisi Buruk</th>
+                      <th>Kondisi Sedang</th>
+                      <th>Kondisi Baik</th>
                   </thead>
                   <?php
                   if ($this->session->userdata("kmeans_result") !== NULL && $this->session->userdata("process_dataset") !== NULL) {
