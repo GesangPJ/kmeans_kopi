@@ -1,4 +1,18 @@
 <?php
+/*
+KMEANS ELBOW Model
+
+Berisi Semua fungsi dan metode untuk mengolah data input menjadi hasil kalkulasi K-Means. 
+Dataset yang dimasukkan :
+ - Normalisasi
+ - Optimasi Elbow
+ - Penentuan Cluster
+ - Penentuan titik Cluster
+ - Perhitungan K-Means
+ - Hasil K-Means
+
+*/
+
 function aasort (&$array, $key) {
     $sorter = array();
     $ret = array();
@@ -428,6 +442,7 @@ if($page == "execute"){
                             <a data-toggle="collapse" href="#cardCollpase6" role="button" aria-expanded="false" aria-controls="cardCollpase2"><i class="mdi mdi-minus"></i></a>
                             <a href="#" data-toggle="remove"><i class="mdi mdi-close"></i></a>
                         </div>
+
                         <h5 class="card-title mb-0 text-white">Hasil Metode Elbow</h5>
                     </div>
                     <div id="cardCollpase6" class="collapse show">
@@ -523,13 +538,14 @@ if($page == "execute"){
                                     <div id="website-stats1" style="height: 350px;" class="flot-chart mt-5"></div>
                                     <p style="text-align:center;">Jumlah Cluster</p>
                                 </div>
-                            </div> <!-- end col -->
+                            </div> 
                         </div>
                     </div>
                 </div>
               <?php }else if($page == "result"){
                 $obj = "";
                 ?>
+                <!-- Menampilkan Hasil Kalkulasi K-Means -->
                 <h4>Hasil Cluster K-Means</h4>
                 <div class="table-responsive" id="export">
                     <table class="table table-border">
@@ -579,6 +595,7 @@ if($page == "execute"){
                               <th>Jumlah</th>
                           </thead>
                           <?php
+                          // Mengambil data cluster dri Array 'kmeans_result'
                           if ($this->session->userdata("kmeans_result") !== NULL) {
                               $res = array();
                               foreach ($this->session->userdata("kmeans_result") as $key) {
@@ -604,6 +621,7 @@ if($page == "execute"){
                           ?>
                       </table>
 <!--Debug Menampilkan Array-->
+
 <!--?php 
 if ($this->session->userdata("kmeans_result") !== NULL) {
     $kmeansResult = $this->session->userdata("kmeans_result");
@@ -625,11 +643,11 @@ if ($this->session->userdata("kmeans_result") !== NULL) {
                       </thead>
                       <?php
                       if ($this->session->userdata("kmeans_result") !== NULL && $this->session->userdata("process_dataset") !== NULL) {
-                          // Get the data from both session variables
-                          $kmeansResult = $this->session->userdata("kmeans_result");
-                          $processDataset = $this->session->userdata("process_dataset");
+                          // Ambil data dari kedua array dari kedua session
+                          $kmeansResult = $this->session->userdata("kmeans_result"); // Berisi Array cluster dengan index tanggaljam
+                          $processDataset = $this->session->userdata("process_dataset"); // Berisi Array data lainnya
                           
-                          // Create an associative array to store cluster assignments based on the timestamp
+                          // Membuat array asosiatif untuk menyimpan semua data cluster berdasarkan tanggaljam (datetime)
                           $clusterAssignments = array();
                           foreach ($kmeansResult as $result) {
                               $timestamp = $result[0];
@@ -639,29 +657,28 @@ if ($this->session->userdata("kmeans_result") !== NULL) {
                           
                           // Initialize arrays to keep track of 'kondisi' counts for each cluster
                           $clusterKondisiCounts = array();
-                          
-                          // Iterate through the dataset to count 'kondisi' values for each cluster
+
+                          // Iterasi dataset untuk menghitung berapa banyak nilai 'kondisi' pada setiap cluster
                           foreach ($processDataset as $data) {
                               $timestamp = $data['tanggaljam'];
                               $kondisi = $data['kondisi'];
                               
-                              // Get the cluster assignment for the current data point
+                              // Cluster Assignment
                               $cluster = $clusterAssignments[$timestamp];
                               
-                              // Initialize the count for the cluster if it doesn't exist
                               if (!isset($clusterKondisiCounts[$cluster])) {
                                   $clusterKondisiCounts[$cluster] = array(0, 0, 0);
                               }
                               
-                              // Increment the count for the corresponding 'kondisi' value
+                              // Perhitungan nilai kondisi, jika  ditemukan maka ditambah 1
                               $clusterKondisiCounts[$cluster][$kondisi - 1]++;
                           }
                           
-                          // Get the sorted cluster numbers
+                          // Sortir cluster dari 1,2,3
                           $sortedClusters = array_keys($clusterKondisiCounts);
                           sort($sortedClusters);
                           
-                          // Display the counts in the table in sorted order
+                          // Menampilkan Data 
                           foreach ($sortedClusters as $cluster) {
                           ?>
                           <tr>
@@ -690,7 +707,7 @@ if ($this->session->userdata("kmeans_result") !== NULL) {
 </div>
 <script>
 $(document).ready(function () {
-  //Grafik untuk menampilkan hasil elbow optimize
+  //Grafik Hasil Elbow Optimize
   if(typeof dataelbow !== 'undefined'){
       var dataset = [
           {
@@ -723,6 +740,7 @@ $(document).ready(function () {
       $.plot($("#website-stats1"), dataset, options);
   }
 });
+// Export Data ke MS.WORD
 function Export2Word(element, filename = '')
 {
     var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
@@ -759,6 +777,7 @@ function Export2Word(element, filename = '')
 
     document.body.removeChild(downloadLink);
 }
+// Tipe Centroid Custom
   function typecentroid(e){
     var type = $(e.target).val();
     if(type=='custom'){
