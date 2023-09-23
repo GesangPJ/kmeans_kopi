@@ -571,9 +571,7 @@ if($page == "execute"){
                         }
                         ?>
                     </table>
-                </div>
-
-                <h4>Jumlah Cluster</h4>
+                    <h4>Jumlah Cluster</h4>
                 <table class="table table-border">
                     <thead>
                         <th>Cluster</th>
@@ -666,6 +664,9 @@ if ($this->session->userdata("kmeans_result") !== NULL) {
                   }
                   ?>
               </table>
+                </div>
+
+                
 
                 </div>
                 <button class="btn btn-purple" onclick="Export2Word('export','export.docx')">Export</button>
