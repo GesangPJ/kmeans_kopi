@@ -77,68 +77,45 @@ class KmeansElbow_Model extends CI_Model {
     return array("centroid"=>$this->centroid_allof,"distance"=>$this->distance,"cluster"=>$this->cluster);
   }
   // Optimasi Elbow
-    public function elbow_optimize($data = [], $maxcluster = 2, $maxloop = 10, $centroid = NULL)
-  {
-      $hasil = array();
-      $result = array();
-      $process = array();
+  public function elbow_optimize($data=[],$maxcluster=2,$maxloop=10,$centroid = NULL){
+    $hasil=array();
+    $result=array();
+    $process=array();
+    for ($cluster=2;$cluster<=$maxcluster;$cluster++) {
+      $this->init($data,$cluster,'rata-rata',$maxloop,$centroid);
+      $this->execute();
+      $output = $this->getprocess();
+      $cluster_acuan = $output['cluster'][(sizeof($output['cluster'])-1)];
+      $centroid_acuan = $output['centroid'][(sizeof($output['centroid'])-1)];
+      $temp2=array();
+      $process2=array();
+      foreach ($cluster_acuan as $key => $value) {
+        $temp1=array();
+        $process1=array();
+        $process1[]="Cluster - ".$cluster;
+        foreach ($data[$key] as $i=>$keys) {
+          $temp1[]=pow(($keys-$centroid_acuan[$value][$i]),2);
+          $process1[]="(".$keys." - ".$centroid_acuan[$value][$i].")^2";
+        }
+        $temp2[]=array_sum($temp1);
+        $process1[]=array_sum($temp1);
+        $process2[]=$process1;
+      }
+      $hasil[]=array("cluster"=>$cluster,"hasil"=>array_sum($temp2));
+      $process[]=$process2;
+    }
+    $x=0;
+    foreach ($hasil as $key) {
+      if($x==0){
+        $result[]=array("cluster"=>$key['cluster'],"nilai"=>$key['hasil'],"selisih"=>$key['hasil']);
+      }else{
+        $result[]=array("cluster"=>$key['cluster'],"nilai"=>$key['hasil'],"selisih"=>abs($key['hasil']-$hasil[$x-1]['hasil']));
+      }
+      $x++;
+    }
+    return array("process"=>$process,"hasil"=>$result);
 
-      // Function to perform one-hot encoding
-      function oneHotEncode($condition)
-      {
-          $conditionMapping = array(
-              "baik" => 0,
-              "sedang" => 1,
-              "buruk" => 2
-          );
-          $encoded = array_fill(0, count($conditionMapping), 0);
-          $encoded[$conditionMapping[$condition]] = 1;
-          return $encoded;
-      }
-
-      // Convert the "kondisi" column using one-hot encoding
-        foreach ($data as &$row) {
-          $kondisiIndex = count($row) - 1; // Assuming "kondisi" is the last column
-          $kondisiEncoded = oneHotEncode($row[$kondisiIndex]); // Use the correct index
-          unset($row[$kondisiIndex]); // Remove the original "kondisi" column
-          $row = array_merge($row, $kondisiEncoded); // Merge one-hot encoded values into the row
-      }
-
-      for ($cluster = 2; $cluster <= $maxcluster; $cluster++) {
-          $this->init($data, $cluster, 'rata-rata', $maxloop, $centroid);
-          $this->execute();
-          $output = $this->getprocess();
-          $cluster_acuan = $output['cluster'][(sizeof($output['cluster']) - 1)];
-          $centroid_acuan = $output['centroid'][(sizeof($output['centroid']) - 1)];
-          $temp2 = array();
-          $process2 = array();
-          foreach ($cluster_acuan as $key => $value) {
-              $temp1 = array();
-              $process1 = array();
-              $process1[] = "Cluster - " . $cluster;
-              foreach ($data[$key] as $i => $keys) {
-                  $temp1[] = pow(($keys - $centroid_acuan[$value][$i]), 2);
-                  $process1[] = "(" . $keys . " - " . $centroid_acuan[$value][$i] . ")^2";
-              }
-              $temp2[] = array_sum($temp1);
-              $process1[] = array_sum($temp1);
-              $process2[] = $process1;
-          }
-          $hasil[] = array("cluster" => $cluster, "hasil" => array_sum($temp2));
-          $process[] = $process2;
-      }
-      $x = 0;
-      foreach ($hasil as $key) {
-          if ($x == 0) {
-              $result[] = array("cluster" => $key['cluster'], "nilai" => $key['hasil'], "selisih" => $key['hasil']);
-          } else {
-              $result[] = array("cluster" => $key['cluster'], "nilai" => $key['hasil'], "selisih" => abs($key['hasil'] - $hasil[$x - 1]['hasil']));
-          }
-          $x++;
-      }
-      return array("process" => $process, "hasil" => $result);
   }
-
   // Eksekusi atau Perhitungan K-Means
   public function execute(){
     for($i=0;;$i++){
@@ -154,20 +131,14 @@ class KmeansElbow_Model extends CI_Model {
         foreach ($this->data as $c) {
           $distance_data = array();
           foreach ($this->data_cluster[$i] as $d) {
-              $cluster_data = array();
-              for ($x = 0; $x < $this->dimensi; $x++) {
-                  // Check if $c[$x] and $d[$x] are numeric before performing calculations
-                  if (is_numeric($c[$x]) && is_numeric($d[$x])) {
-                      $cluster_data[$x] = pow(abs($c[$x] - $d[$x]), 2);
-                  } else {
-                      // Handle non-numeric values here
-                      $cluster_data[$x] = 0; // or another appropriate value
-                  }
-              }
-              $distance_data[] = sqrt(array_sum($cluster_data));
+            $cluster_data = array();
+            for ($x=0;$x<$this->dimensi;$x++) {
+              $cluster_data[$x]=pow(abs($c[$x]-$d[$x]),2);
+            }
+            $distance_data[] = sqrt(array_sum($cluster_data));
           }
-          $this->distance[$i][] = $distance_data;
-      }
+          $this->distance[$i][]=$distance_data;
+        }
         //cluster
         $x=0;
         foreach ($this->distance[$i] as $key) {
