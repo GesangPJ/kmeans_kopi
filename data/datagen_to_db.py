@@ -21,20 +21,12 @@ def random_datetime(start_date, end_date):
 # Function to generate random data based on your criteria
 def generate_data():
     tanggaljam = random_datetime(datetime(2023, 1, 1), datetime(2023, 12, 31))
-    suhu = round(random.uniform(15, 35), 2)
-    pH = round(random.uniform(0, 14), 1)
-    kelembaban = round(random.uniform(30, 80), 1)
+    suhu = random.randint(15, 35)
+    pH = random.randint(0, 14)
+    kelembaban = random.randint(30, 80)
+    kondisi = random.randint(1, 3)
 
-    if 5 <= pH <= 6.5 and 18 <= suhu <= 22:
-        kondisi = "Baik"
-    elif pH > 6.6 and 18 <= suhu <= 25:
-        kondisi = "Sedang"
-    elif pH < 5 and 18 <= suhu <= 25:
-        kondisi = "Sedang"
-    else:
-        kondisi = "Buruk"
-
-    return tanggaljam, suhu, pH, kelembaban
+    return tanggaljam, suhu, pH, kelembaban, kondisi
 
 # Generate data
 data = []
@@ -42,7 +34,7 @@ for _ in range(50):  # You can change the number of rows as needed
     data.append(generate_data())
 
 # Create a pandas DataFrame from the generated data
-df = pd.DataFrame(data, columns=["tanggaljam", "suhu", "pH", "kelembaban"])
+df = pd.DataFrame(data, columns=["tanggaljam", "suhu", "pH", "kelembaban", "kondisi"])
 
 # Sort the DataFrame by the "tanggaljam" column
 df = df.sort_values(by="tanggaljam", ascending=False)
@@ -65,7 +57,8 @@ CREATE TABLE IF NOT EXISTS sensor_data (
     tanggaljam DATETIME,
     suhu INT,
     pH INT,
-    kelembaban INT
+    kelembaban INT,
+    kondisi INT
 );
 """
 cursor.execute(create_table_query)
@@ -75,7 +68,7 @@ cursor.execute(create_table_query)
 #cursor.execute(reset_id_query)
 
 # Insert the sorted data from the DataFrame into the database
-insert_query = "INSERT INTO sensor_data (tanggaljam, suhu, pH, kelembaban) VALUES (%s, %s, %s, %s)"
+insert_query = "INSERT INTO sensor_data (tanggaljam, suhu, pH, kelembaban, kondisi) VALUES (%s, %s, %s, %s, %s)"
 values = [tuple(row) for row in df.values]
 cursor.executemany(insert_query, values)
 
