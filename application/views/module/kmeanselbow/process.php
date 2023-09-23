@@ -12,7 +12,7 @@ Dataset yang dimasukkan :
  - Hasil K-Means
 
 */
-
+// Inisialisasi Array
 function aasort (&$array, $key) {
     $sorter = array();
     $ret = array();
@@ -26,6 +26,7 @@ function aasort (&$array, $key) {
     }
     $array = $ret;
 }
+// Memasukkand dataset yang diupload ke bentuk Array dan disimpan kedalam Session 'userdata'
 $process = array();
 if($page == "cluster"){
   if(isset($_POST['simpan'])){
@@ -37,15 +38,15 @@ if($page == "cluster"){
     $this->session->set_userdata('isimanual',$this->input->post('isimanual'));
   }
 }
+// Jika dataset dalam bentuk excel berhasil diupload maka dataset diproses dan dimasukkan kedalam session 'userdata'
 if($page == "execute"){
   //cluster execution, check if
   if($this->session->userdata('datatoprocess')!==NULL && $this->session->userdata('jmlcentroid')!==NULL && $this->session->userdata('centroid')!==NULL){
     //menginisialisasi data dulu pake fungsi init dan masukan kedalam parameter, fungsi2 nya ada di KmeansElbow_Model.php di folder application/model/
     $this->kmeanselbow->init($this->session->userdata('datatoprocess'),$this->session->userdata('jmlcentroid'),$this->session->userdata('centroid'),$this->session->userdata('maxloop'));
     $this->kmeanselbow->execute();
-    //Get result from processed K-Means
     $process = $this->kmeanselbow->getprocess();
-    //Result below
+
   }
 }
 ?>
@@ -74,10 +75,9 @@ if($page == "execute"){
                 ?>
                 <div class="col-md-12">
                     <div class="card-box">
+                      <!-- Form Upload Dataset-->
                       <h3>UPLOAD DATASET</h3>
-                      <!--
-                      <small><a href="<?=base_url();?>assets/kmeanselbow/k-means-dataset.xlsx" target="_blank">Download contoh Format .xlsx</a></small>
-                -->
+                      
                       <br>
                       <form enctype="multipart/form-data">
                           <input id="upload" type="file" name="files">
