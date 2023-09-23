@@ -571,34 +571,39 @@ if($page == "execute"){
                         }
                         ?>
                     </table>
+                    <!-- Menampilkan Jumlah Data Per-Cluster -->
                     <h4>Jumlah Cluster</h4>
-                <table class="table table-border">
-                    <thead>
-                        <th>Cluster</th>
-                        <th>Jumlah</th>
-                    </thead>
-                    <?php
-                    if ($this->session->userdata("kmeans_result") !== NULL) {
-                        $res = array();
-                        foreach ($this->session->userdata("kmeans_result") as $key) {
-                            if (!isset($res[$key[1]])) {
-                                $res[$key[1]] = 1;
-                            } else {
-                                $res[$key[1]]++;
-                            }
-                        }
-                        foreach ($res as $key => $val) {
-                        ?>
-                        <tr>
-                            <td><?= $key ?></td>
-                            <td><?= $val ?></td>
-                        </tr>
-                        <?php
-                        }
-                    }
-                    ?>
-                </table>
+                      <table class="table table-border">
+                          <thead>
+                              <th>Cluster</th>
+                              <th>Jumlah</th>
+                          </thead>
+                          <?php
+                          if ($this->session->userdata("kmeans_result") !== NULL) {
+                              $res = array();
+                              foreach ($this->session->userdata("kmeans_result") as $key) {
+                                  if (!isset($res[$key[1]])) {
+                                      $res[$key[1]] = 1;
+                                  } else {
+                                      $res[$key[1]]++;
+                                  }
+                              }
 
+                              // Sortir Cluster dari 1,2,3
+                              ksort($res);
+
+                              foreach ($res as $key => $val) {
+                              ?>
+                              <tr>
+                                  <td><?= $key ?></td>
+                                  <td><?= $val ?></td>
+                              </tr>
+                              <?php
+                              }
+                          }
+                          ?>
+                      </table>
+<!--Debug Menampilkan Array-->
 <!--?php 
 if ($this->session->userdata("kmeans_result") !== NULL) {
     $kmeansResult = $this->session->userdata("kmeans_result");
@@ -608,62 +613,68 @@ if ($this->session->userdata("kmeans_result") !== NULL) {
     echo "</pre>";
 }
 ?-->
-              <h4>Jumlah Data Kondisi Per-Cluster</h4>
-              <table class="table table-border">
-                  <thead>
-                      <th>Cluster</th>
-                      <th>Kondisi Baik</th>
-                      <th>Kondisi Sedang</th>
-                      <th>Kondisi Buruk</th>
-                  </thead>
-                  <?php
-                  if ($this->session->userdata("kmeans_result") !== NULL && $this->session->userdata("process_dataset") !== NULL) {
-                      // Get the data from both session variables
-                      $kmeansResult = $this->session->userdata("kmeans_result");
-                      $processDataset = $this->session->userdata("process_dataset");
-                      
-                      // Create an associative array to store cluster assignments based on the timestamp
-                      $clusterAssignments = array();
-                      foreach ($kmeansResult as $result) {
-                          $timestamp = $result[0];
-                          $cluster = $result[1];
-                          $clusterAssignments[$timestamp] = $cluster;
-                      }
-                      
-                      // Initialize arrays to keep track of 'kondisi' counts for each cluster
-                      $clusterKondisiCounts = array();
-                      
-                      // Iterate through the dataset to count 'kondisi' values for each cluster
-                      foreach ($processDataset as $data) {
-                          $timestamp = $data['tanggaljam'];
-                          $kondisi = $data['kondisi'];
+
+<!--Menampilkan berapa banyak jenis kondisi per cluster-->
+                  <h4>Jumlah Data Kondisi Per-Cluster</h4>
+                  <table class="table table-border">
+                      <thead>
+                          <th>Cluster</th>
+                          <th>Kondisi Baik</th>
+                          <th>Kondisi Sedang</th>
+                          <th>Kondisi Buruk</th>
+                      </thead>
+                      <?php
+                      if ($this->session->userdata("kmeans_result") !== NULL && $this->session->userdata("process_dataset") !== NULL) {
+                          // Get the data from both session variables
+                          $kmeansResult = $this->session->userdata("kmeans_result");
+                          $processDataset = $this->session->userdata("process_dataset");
                           
-                          // Get the cluster assignment for the current data point
-                          $cluster = $clusterAssignments[$timestamp];
-                          
-                          // Initialize the count for the cluster if it doesn't exist
-                          if (!isset($clusterKondisiCounts[$cluster])) {
-                              $clusterKondisiCounts[$cluster] = array(0, 0, 0);
+                          // Create an associative array to store cluster assignments based on the timestamp
+                          $clusterAssignments = array();
+                          foreach ($kmeansResult as $result) {
+                              $timestamp = $result[0];
+                              $cluster = $result[1];
+                              $clusterAssignments[$timestamp] = $cluster;
                           }
                           
-                          // Increment the count for the corresponding 'kondisi' value
-                          $clusterKondisiCounts[$cluster][$kondisi - 1]++;
+                          // Initialize arrays to keep track of 'kondisi' counts for each cluster
+                          $clusterKondisiCounts = array();
+                          
+                          // Iterate through the dataset to count 'kondisi' values for each cluster
+                          foreach ($processDataset as $data) {
+                              $timestamp = $data['tanggaljam'];
+                              $kondisi = $data['kondisi'];
+                              
+                              // Get the cluster assignment for the current data point
+                              $cluster = $clusterAssignments[$timestamp];
+                              
+                              // Initialize the count for the cluster if it doesn't exist
+                              if (!isset($clusterKondisiCounts[$cluster])) {
+                                  $clusterKondisiCounts[$cluster] = array(0, 0, 0);
+                              }
+                              
+                              // Increment the count for the corresponding 'kondisi' value
+                              $clusterKondisiCounts[$cluster][$kondisi - 1]++;
+                          }
+                          
+                          // Get the sorted cluster numbers
+                          $sortedClusters = array_keys($clusterKondisiCounts);
+                          sort($sortedClusters);
+                          
+                          // Display the counts in the table in sorted order
+                          foreach ($sortedClusters as $cluster) {
+                          ?>
+                          <tr>
+                              <td><?= $cluster ?></td>
+                              <td><?= $clusterKondisiCounts[$cluster][0] ?></td>
+                              <td><?= $clusterKondisiCounts[$cluster][1] ?></td>
+                              <td><?= $clusterKondisiCounts[$cluster][2] ?></td>
+                          </tr>
+                          <?php
+                          }
                       }
-                      
-                      // Display the counts in the table
-                      foreach ($clusterKondisiCounts as $cluster => $counts) {
                       ?>
-                      <tr>
-                          <td><?= $cluster ?></td>
-                          <td><?= $counts[0] ?></td>
-                          <td><?= $counts[1] ?></td>
-                          <td><?= $counts[2] ?></td>
-                      </tr>
-                      <?php
-                      }
-                  }
-                  ?>
-              </table>
+                  </table>
                 </div>
 
                 
@@ -712,7 +723,8 @@ $(document).ready(function () {
       $.plot($("#website-stats1"), dataset, options);
   }
 });
-function Export2Word(element, filename = ''){
+function Export2Word(element, filename = '')
+{
     var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
     var postHtml = "</body></html>";
     var html = preHtml+document.getElementById(element).innerHTML+postHtml;
@@ -747,14 +759,14 @@ function Export2Word(element, filename = ''){
 
     document.body.removeChild(downloadLink);
 }
-function typecentroid(e){
-  var type = $(e.target).val();
-  if(type=='custom'){
-    $('#clustermodal').modal('show');
-  }else if(type=='fill'){
-    $('#fm').show();
-  }else {
-    $('#fm').hide();
+  function typecentroid(e){
+    var type = $(e.target).val();
+    if(type=='custom'){
+      $('#clustermodal').modal('show');
+    }else if(type=='fill'){
+      $('#fm').show();
+    }else {
+      $('#fm').hide();
+    }
   }
-}
 </script>
