@@ -25,27 +25,44 @@
 
                 if (!empty($log_entries)):
                     foreach ($log_entries as $entry):
-                    ?><!-- Menampilkan data dari database ke tabel dibawah-->
+                        // Convert numeric value of Kondisi to its string representation
+                        $kondisiLabel = '';
+                        switch ($entry->kondisi) {
+                            case 1:
+                                $kondisiLabel = 'Baik';
+                                break;
+                            case 2:
+                                $kondisiLabel = 'Sedang';
+                                break;
+                            case 3:
+                                $kondisiLabel = 'Buruk';
+                                break;
+                            default:
+                                $kondisiLabel = 'Unknown';
+                                break;
+                        }
+                        ?><!-- Menampilkan data dari database ke tabel dibawah-->
                         <tr> 
                             <td><?php echo $entry->id; ?></td>
                             <td><?php echo $entry->tanggaljam; ?></td>
                             <td><?php echo $entry->suhu; ?></td>
                             <td><?php echo $entry->pH; ?></td>
                             <td><?php echo $entry->kelembaban; ?></td>
-                            <td><?php echo $entry->kondisi; ?></td>
+                            <td><?php echo $kondisiLabel; ?></td>
                         </tr>
                     <?php
                     endforeach;
                 else:
                     ?> <!-- Jika tidak ada data / Tabel kosong -->
                     <tr>
-                        <td colspan="5">No data available.</td>
+                        <td colspan="6">No data available.</td>
                     </tr>
                 <?php
                 endif;
                 ?>
                 </tbody>
             </table>
+
         </div>   
 </div>
 <div class="export-button-container" style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
