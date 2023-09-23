@@ -83,66 +83,6 @@ if($page == "execute"){
                         <thead>
                           <tr>
                           <?php
-<<<<<<< Updated upstream
-// ini fungsi untuk menampilkan data dari session kedalam bentuk tabel
-foreach ($index as $key) {
-    ?>
-    <th><?= $key ?></th>
-    <?php
-}
-?>
-</tr>
-</thead>
-<tbody>
-    <?php
-    $datatoprocess = array();
-    $indexdata = array();
-    
-    // Move the header row printing code outside of the dataset loop
-    $firstIteration = true; // Initialize a flag to indicate the first iteration
-    
-    foreach ($dataset as $key) {
-        ?>
-        <tr>
-            <?php
-            $temp = array();
-            $x = 0;
-            foreach ($index as $keys) {
-                if ($keys === "tanggaljam") { // Check if the column is "tanggaljam"
-                    $datetimeIndex = date('Y-m-d H:i:s', strtotime($key[$keys])); // Convert to datetime format
-                } else {
-                    $datetimeIndex = $key[$keys]; // Assume other columns are already in datetime format
-                }
-                if (isset($datetimeIndex)) {
-                    if ($x > 0) {
-                        array_push($temp, $datetimeIndex);
-                    } else {
-                        array_push($indexdata, $datetimeIndex);
-                    }
-                    ?>
-                    <td><?= $datetimeIndex ?></td>
-                    <?php
-                    $x++;
-                }
-            }
-            ?>
-        </tr>
-        <?php
-        array_push($datatoprocess, $temp);
-        
-        // Set the flag to false after the first iteration
-        if ($firstIteration) {
-            $firstIteration = false;
-        }
-    }
-    $this->session->set_userdata("datatoprocess", $datatoprocess);
-    $this->session->set_userdata("indexdata", $indexdata);
-    ?>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="card-box table-responsive">
-=======
                             // ini fungsi untuk menampilkan data dari session kedalam bentuk tabel
                             foreach ($index as $key) {
                                 ?>
@@ -153,55 +93,54 @@ foreach ($index as $key) {
                             </tr>
                             </thead>
                             <tbody>
-                          <?php
-                          $datatoprocess = array();
-                          $indexdata = array();
-                          
-                          // Move the header row printing code outside of the dataset loop
-                          $firstIteration = true; // Initialize a flag to indicate the first iteration
-                          
-                          foreach ($dataset as $key) {
-                              ?>
-                              <tr>
-                                  <?php
-                                  $temp = array();
-                                  $x = 0;
-                                  foreach ($index as $keys) {
-                                      if ($keys === "tanggaljam") { // Check if the column is "tanggaljam"
-                                          $datetimeIndex = date('Y-m-d H:i:s', strtotime($key[$keys])); // Convert to datetime format
-                                      } else {
-                                          $datetimeIndex = $key[$keys]; // Assume other columns are already in datetime format
-                                      }
-                                      if (isset($datetimeIndex)) {
-                                          if ($x > 0) {
-                                              array_push($temp, $datetimeIndex);
-                                          } else {
-                                              array_push($indexdata, $datetimeIndex);
-                                          }
-                                          ?>
-                                          <td><?= $datetimeIndex ?></td>
-                                          <?php
-                                          $x++;
-                                      }
-                                  }
-                                  ?>
-                              </tr>
-                              <?php
-                              array_push($datatoprocess, $temp);
-                              
-                              // Set the flag to false after the first iteration
-                              if ($firstIteration) {
-                                  $firstIteration = false;
-                              }
-                          }
-                          $this->session->set_userdata("datatoprocess", $datatoprocess);
-                          $this->session->set_userdata("indexdata", $indexdata);
-                          ?>
-                                              </tbody>
-                                            </table>
-                                          </div>
-                                          <div class="card-box table-responsive">
->>>>>>> Stashed changes
+                                <?php
+                                $datatoprocess = array();
+                                $indexdata = array();
+                                
+                                // Move the header row printing code outside of the dataset loop
+                                $firstIteration = true; // Initialize a flag to indicate the first iteration
+                                
+                                foreach ($dataset as $key) {
+                                    ?>
+                                    <tr>
+                                        <?php
+                                        $temp = array();
+                                        $x = 0;
+                                        foreach ($index as $keys) {
+                                            if ($keys === "tanggaljam") { // Check if the column is "tanggaljam"
+                                                $datetimeIndex = date('Y-m-d H:i:s', strtotime($key[$keys])); // Convert to datetime format
+                                            } else {
+                                                $datetimeIndex = $key[$keys]; // Assume other columns are already in datetime format
+                                            }
+                                            if (isset($datetimeIndex)) {
+                                                if ($x > 0) {
+                                                    array_push($temp, $datetimeIndex);
+                                                } else {
+                                                    array_push($indexdata, $datetimeIndex);
+                                                }
+                                                ?>
+                                                <td><?= $datetimeIndex ?></td>
+                                                <?php
+                                                $x++;
+                                            }
+                                        }
+                                        ?>
+                                    </tr>
+                                    <?php
+                                    array_push($datatoprocess, $temp);
+                                    
+                                    // Set the flag to false after the first iteration
+                                    if ($firstIteration) {
+                                        $firstIteration = false;
+                                    }
+                                }
+                                $this->session->set_userdata("datatoprocess", $datatoprocess);
+                                $this->session->set_userdata("indexdata", $indexdata);
+                                ?>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="card-box table-responsive">
                       <h4>Dataset Normalisasi K-Means & Elbow</h4>
                       <table class="table table-striped">
                         <thead>
