@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  var base_url = "http://127.0.0.1/ml/kmeanselbow/";
+  var base_url = "http://127.0.0.1/kmeans_kopi/";
   var global = [];
       var ExcelToJSON = function() {
         this.parseExcel = function(file) {
