@@ -599,8 +599,64 @@ if($page == "execute"){
                     }
                     ?>
                   </table>
+
                   <h4>Jumlah Cluster</h4>
 <table class="table table-border">
+  <thead>
+    <th>Cluster</th>
+    <th>Jumlah</th>
+    <th>Baik</th>
+    <th>Sedang</th>
+    <th>Buruk</th>
+  </thead>
+  <tbody>
+    <?php
+    if ($this->session->userdata("kmeans_result") !== NULL) {
+      $res = array();
+      $kondisiCounts = array();
+      foreach ($this->session->userdata("kmeans_result") as $key) {
+        if (!isset($res[$key[1]])) {
+          $res[$key[1]] = 1;
+        } else {
+          $res[$key[1]]++;
+        }
+
+        // Check if 'kondisi' key exists and access it safely
+        $kondisi = $key['kondisi'] ?? 0;
+
+        // Count Kondisi values
+        $clusterId = $key[1];
+        if (!isset($kondisiCounts[$clusterId])) {
+          $kondisiCounts[$clusterId] = array('Baik' => 0, 'Sedang' => 0, 'Buruk' => 0);
+        }
+        // Increment the count based on the Kondisi value
+        if ($kondisi === 1) {
+          $kondisiCounts[$clusterId]['Baik']++;
+        } elseif ($kondisi === 2) {
+          $kondisiCounts[$clusterId]['Sedang']++;
+        } elseif ($kondisi === 3) {
+          $kondisiCounts[$clusterId]['Buruk']++;
+        }
+      }
+
+      foreach ($res as $key => $val) {
+        ?>
+        <tr>
+          <td><?=$key?></td>
+          <td><?=$val?></td>
+          <td><?=$kondisiCounts[$key]['Baik'] ?? 0?></td>
+          <td><?=$kondisiCounts[$key]['Sedang'] ?? 0?></td>
+          <td><?=$kondisiCounts[$key]['Buruk'] ?? 0?></td>
+        </tr>
+        <?php
+      }
+    }
+    ?>
+  </tbody>
+</table>
+                  <!--
+                  <h4>Jumlah Cluster</h4>
+                  <table class="table table-border">
     <thead>
         <th>Cluster</th>
         <th>Jumlah</th>
@@ -620,8 +676,8 @@ if($page == "execute"){
             }
 
             // Check if 'kondisi' key exists and access it safely
-            $kondisi = isset($key['kondisi']) ? $key['kondisi'] : 0;
-            
+            $kondisi = $key['kondisi'] ?? 0;
+
             // Count Kondisi values
             $clusterId = $key[1];
             if (!isset($kondisiCounts[$clusterId])) {
@@ -636,7 +692,7 @@ if($page == "execute"){
                 $kondisiCounts[$clusterId]['Buruk']++;
             }
         }
-        
+
         foreach ($res as $key => $val) {
             ?>
             <tr>
@@ -650,7 +706,7 @@ if($page == "execute"){
         }
     }
     ?>
-</table>
+</table>-->
                 </div>
                 <button class="btn btn-purple" onclick="Export2Word('export','export.docx')">Export</button>
                 <?php
