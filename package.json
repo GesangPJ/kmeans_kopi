@@ -1,0 +1,9 @@
+{
+    "name": "kmeans-kopi-ci3",
+    "version": "1.0.0",
+    "description": "Docker Image of kmeans_kopi website project",
+    "author": "Gesang Paudra Jaya",
+    "license": "CreativeCommons BY-NC-ND",
+    "repository": "https://github.com/GesangPJ/kmeans_kopi"
+  }
+  
