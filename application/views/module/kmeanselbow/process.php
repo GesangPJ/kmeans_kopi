@@ -710,7 +710,7 @@ if ($this->session->userdata("process_datasetindex") !== NULL) {
         <?php
         }
 
-        // Calculate the totals across all clusters
+        // Menghitung setiap kondisi pada seluruh cluster
         $totalKondisiBaik = array_sum(array_column($clusterKondisiCounts, 0));
         $totalKondisiSedang = array_sum(array_column($clusterKondisiCounts, 1));
         $totalKondisiBuruk = array_sum(array_column($clusterKondisiCounts, 2));
