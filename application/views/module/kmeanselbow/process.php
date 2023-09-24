@@ -204,6 +204,13 @@ if($page == "execute"){
                             ?>
                         </tbody>
                       </table>
+                      
+<!--Debug Menampilkan struktur data pada Variabel-->   
+<!--?=
+// $keys : menampilkan index
+// $dataset : dataset mentah
+var_dump($x);?-->
+
                     </div>
                     <?php } ?>
                   </div>
@@ -211,6 +218,7 @@ if($page == "execute"){
                 //Ketika memilih menu Tentukan Cluster
               }else if($page == 'cluster'){ ?>
                   <h4>Tentukan Centroid & Cluster</h4>
+
                   <br />
                   <?=form_open("kmeanselbow/process/cluster",array("class"=>"form-horizontal","role"=>"form"))?>
                   <form class="form-horizontal" role="form" method="POST">
@@ -620,12 +628,21 @@ if($page == "execute"){
                           }
                           ?>
                       </table>
+
+
 <!--Debug Menampilkan Array-->
 
 <!--?php 
-if ($this->session->userdata("kmeans_result") !== NULL) {
-    $kmeansResult = $this->session->userdata("kmeans_result");
-    echo "<h4>process_dataset:</h4>";
+// kmeans_result : Array Data penentuan cluster berdasarkan tanggaljam
+// process_dataset : Array dataset
+// datatoprocess : data untuk diproses normalisasi
+// indexdata : Array index tanggaljam
+// process_datasetindex : Array kolom
+// $dataset
+
+if ($this->session->userdata("process_datasetindex") !== NULL) {
+    $kmeansResult = $this->session->userdata("process_datasetindex");
+    echo "<h4>Array:</h4>";
     echo "<pre>";
     print_r($kmeansResult);
     echo "</pre>";
