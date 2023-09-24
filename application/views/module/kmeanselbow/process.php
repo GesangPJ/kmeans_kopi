@@ -650,65 +650,81 @@ if ($this->session->userdata("process_datasetindex") !== NULL) {
 ?-->
 
 <!--Menampilkan berapa banyak jenis kondisi per cluster-->
-                  <h4>Jumlah Data Kondisi Per-Cluster</h4>
-                  <table class="table table-border">
-                      <thead>
-                          <th>Cluster</th>
-                          <th>Kondisi Baik</th>
-                          <th>Kondisi Sedang</th>
-                          <th>Kondisi Buruk</th>
-                      </thead>
-                      <?php
-                      if ($this->session->userdata("kmeans_result") !== NULL && $this->session->userdata("process_dataset") !== NULL) {
-                          // Ambil data dari kedua array dari kedua session
-                          $kmeansResult = $this->session->userdata("kmeans_result"); // Berisi Array cluster dengan index tanggaljam
-                          $processDataset = $this->session->userdata("process_dataset"); // Berisi Array data lainnya
-                          
-                          // Membuat array asosiatif untuk menyimpan semua data cluster berdasarkan tanggaljam (datetime)
-                          $clusterAssignments = array();
-                          foreach ($kmeansResult as $result) {
-                              $timestamp = $result[0];
-                              $cluster = $result[1];
-                              $clusterAssignments[$timestamp] = $cluster;
-                          }
-                          
-                          // Initialize arrays to keep track of 'kondisi' counts for each cluster
-                          $clusterKondisiCounts = array();
+<h4>Jumlah Data Kondisi Per-Cluster</h4>
+<table class="table table-border">
+    <thead>
+        <th>Cluster</th>
+        <th>Kondisi Baik</th>
+        <th>Kondisi Sedang</th>
+        <th>Kondisi Buruk</th>
+    </thead>
+    <?php
+    if ($this->session->userdata("kmeans_result") !== NULL && $this->session->userdata("process_dataset") !== NULL) {
+        // Ambil data dari kedua array dari kedua session
+        $kmeansResult = $this->session->userdata("kmeans_result"); // Berisi Array cluster dengan index tanggaljam
+        $processDataset = $this->session->userdata("process_dataset"); // Berisi Array data lainnya
 
-                          // Iterasi dataset untuk menghitung berapa banyak nilai 'kondisi' pada setiap cluster
-                          foreach ($processDataset as $data) {
-                              $timestamp = $data['tanggaljam'];
-                              $kondisi = $data['kondisi'];
-                              
-                              // Cluster Assignment
-                              $cluster = $clusterAssignments[$timestamp];
-                              
-                              if (!isset($clusterKondisiCounts[$cluster])) {
-                                  $clusterKondisiCounts[$cluster] = array(0, 0, 0);
-                              }
-                              
-                              // Perhitungan nilai kondisi, jika  ditemukan maka ditambah 1
-                              $clusterKondisiCounts[$cluster][$kondisi - 1]++;
-                          }
-                          
-                          // Sortir cluster dari 1,2,3
-                          $sortedClusters = array_keys($clusterKondisiCounts);
-                          sort($sortedClusters);
-                          
-                          // Menampilkan Data 
-                          foreach ($sortedClusters as $cluster) {
-                          ?>
-                          <tr>
-                              <td><?= $cluster ?></td>
-                              <td><?= $clusterKondisiCounts[$cluster][0] ?></td>
-                              <td><?= $clusterKondisiCounts[$cluster][1] ?></td>
-                              <td><?= $clusterKondisiCounts[$cluster][2] ?></td>
-                          </tr>
-                          <?php
-                          }
-                      }
-                      ?>
-                  </table>
+        // Membuat array asosiatif untuk menyimpan semua data cluster berdasarkan tanggaljam (datetime)
+        $clusterAssignments = array();
+        foreach ($kmeansResult as $result) {
+            $timestamp = $result[0];
+            $cluster = $result[1];
+            $clusterAssignments[$timestamp] = $cluster;
+        }
+
+        // Initialize arrays to keep track of 'kondisi' counts for each cluster
+        $clusterKondisiCounts = array();
+
+        // Iterasi dataset untuk menghitung berapa banyak nilai 'kondisi' pada setiap cluster
+        foreach ($processDataset as $data) {
+            $timestamp = $data['tanggaljam'];
+            $kondisi = $data['kondisi'];
+
+            // Cluster Assignment
+            $cluster = $clusterAssignments[$timestamp];
+
+            if (!isset($clusterKondisiCounts[$cluster])) {
+                $clusterKondisiCounts[$cluster] = array(0, 0, 0);
+            }
+
+            // Perhitungan nilai kondisi, jika ditemukan maka ditambah 1
+            $clusterKondisiCounts[$cluster][$kondisi - 1]++;
+        }
+
+        // Sortir cluster dari 1,2,3
+        $sortedClusters = array_keys($clusterKondisiCounts);
+        sort($sortedClusters);
+
+        // Menampilkan Data
+        foreach ($sortedClusters as $cluster) {
+            $kondisiBaik = $clusterKondisiCounts[$cluster][0];
+            $kondisiSedang = $clusterKondisiCounts[$cluster][1];
+            $kondisiBuruk = $clusterKondisiCounts[$cluster][2];
+        ?>
+        <tr>
+            <td><?= $cluster ?></td>
+            <td><?= $kondisiBaik ?></td>
+            <td><?= $kondisiSedang ?></td>
+            <td><?= $kondisiBuruk ?></td>
+        </tr>
+        <?php
+        }
+
+        // Menghitung setiap kondisi pada seluruh cluster
+        $totalKondisiBaik = array_sum(array_column($clusterKondisiCounts, 0));
+        $totalKondisiSedang = array_sum(array_column($clusterKondisiCounts, 1));
+        $totalKondisiBuruk = array_sum(array_column($clusterKondisiCounts, 2));
+        ?>
+        <tr>
+            <td>Total Kondisi</td>
+            <td><?= $totalKondisiBaik ?></td>
+            <td><?= $totalKondisiSedang ?></td>
+            <td><?= $totalKondisiBuruk ?></td>
+        </tr>
+    <?php
+    }
+    ?>
+</table>
                 </div>
 
                 
