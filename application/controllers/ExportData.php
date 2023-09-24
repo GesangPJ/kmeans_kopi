@@ -20,10 +20,10 @@ class ExportData extends CI_Controller {
 
         // Set headers
         $sheet->setCellValue('A1', 'tanggaljam');
-        $sheet->setCellValue('B1', 'Suhu');
+        $sheet->setCellValue('B1', 'suhu');
         $sheet->setCellValue('C1', 'pH');
-        $sheet->setCellValue('D1', 'Kelembaban');
-        $sheet->setCellValue('E1', 'Kondisi');
+        $sheet->setCellValue('D1', 'kelembaban');
+        $sheet->setCellValue('E1', 'kondisi');
 
         // Fetch data from your database (selecting only the desired columns)
         $query = $this->db->get('sensor_data'); // 'sensor_data' is your table name
