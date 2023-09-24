@@ -4,6 +4,7 @@
     "description": "Docker Image of kmeans_kopi website project",
     "author": "Gesang Paudra Jaya",
     "license": "CreativeCommons BY-NC-ND",
-    "repository": "https://github.com/GesangPJ/kmeans_kopi"
+    "repository": "https://github.com/GesangPJ/kmeans_kopi",
+    "container": "https://github.com/gesangpj/kmeans_kopi/pkgs/container/kmeans-kopi-ci3"
   }
   
