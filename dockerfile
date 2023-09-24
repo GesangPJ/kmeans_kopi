@@ -14,10 +14,10 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install project dependencies using Composer
-RUN composer install
+# RUN composer install
 
 # Expose the Apache web server port
 EXPOSE 80
 
 # Start the Apache web server
-CMD ["apache2-foreground"]
+# CMD ["apache2-foreground"]
